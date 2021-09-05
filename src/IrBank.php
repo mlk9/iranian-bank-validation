@@ -11,6 +11,7 @@ class IrBank
     {
         self::$banks[] = $bankObj = new Bank('eghtesad-novin');
         $bankObj->addPreCardNumber(627412);
+        $bankObj->addIbanNumber(55);
         self::$banks[] = $bankObj = new Bank('ansar');
         $bankObj->addPreCardNumber(627381);
         $bankObj->addIbanNumber(63);
@@ -54,6 +55,7 @@ class IrBank
         $bankObj->addIbanNumber(15);
         self::$banks[] = $bankObj = new Bank('sarmaye');
         $bankObj->addPreCardNumber(639607);
+        $bankObj->addIbanNumber(58);
         self::$banks[] = $bankObj = new Bank('sina');
         $bankObj->addPreCardNumber(639346);
         self::$banks[] = $bankObj = new Bank('shahr');
@@ -61,6 +63,7 @@ class IrBank
         $bankObj->addIbanNumber(61);
         self::$banks[] = $bankObj = new Bank('sanaat-madan');
         $bankObj->addPreCardNumber(627961);
+        $bankObj->addIbanNumber(11);
         self::$banks[] = $bankObj = new Bank('mehr-iran');
         $bankObj->addPreCardNumber(606373);
         self::$banks[] = $bankObj = new Bank('ghavamin');
@@ -73,12 +76,15 @@ class IrBank
         self::$banks[] = $bankObj = new Bank('keshavarzi');
         $bankObj->addPreCardNumber(603770);
         $bankObj->addPreCardNumber(639217);
+        $bankObj->addIbanNumber(16);
         self::$banks[] = $bankObj = new Bank('gardeshgari');
         $bankObj->addPreCardNumber(505416);
         self::$banks[] = $bankObj = new Bank('markazi');
         $bankObj->addPreCardNumber(636795);
+        $bankObj->addIbanNumber(10);
         self::$banks[] = $bankObj = new Bank('maskan');
         $bankObj->addPreCardNumber(628023);
+        $bankObj->addIbanNumber(14);
         self::$banks[] = $bankObj = new Bank('melat');
         $bankObj->addPreCardNumber(610433);
         $bankObj->addPreCardNumber(991975);
@@ -91,8 +97,10 @@ class IrBank
         $bankObj->addIbanNumber(22);
         self::$banks[] = $bankObj = new Bank('post-bank');
         $bankObj->addPreCardNumber(627760);
+        $bankObj->addIbanNumber(21);
         self::$banks[] = $bankObj = new Bank('moasese-tosee');
         $bankObj->addPreCardNumber(628157);
+        $bankObj->addIbanNumber(51);
         self::$banks[] = $bankObj = new Bank('moasese-kosar');
         $bankObj->addPreCardNumber(505801);
         self::$banks[] = $bankObj = new Bank('moasese-asgarie');
