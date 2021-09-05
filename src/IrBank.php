@@ -111,6 +111,8 @@ class IrBank
         $bankObj->addPreCardNumber(504172);
         $banks[] = $bankObj = new Bank('ayande'); 
         $bankObj->addPreCardNumber(636214);
+        $banks[] = $bankObj = new Bank('khavarmiyane'); 
+        $bankObj->addPreCardNumber(505809);
 
         foreach ($banks as $bank) {
             if($bank->isCard($number))
