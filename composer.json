@@ -1,7 +1,7 @@
 {
     "name": "mlk9/iranian-bank-validation",
     "description": "validate information of Iranian banks, you can use this in your Laravel projects",
-    "type": "composer-plugin",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
