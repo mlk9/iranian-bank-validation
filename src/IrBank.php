@@ -106,6 +106,18 @@ class IrBank
         $bankObj->addPreCardNumber(505809);
     }
 
+    protected static function convertNumbers($string)
+    {
+        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        $arabic = ['٩', '٨', '٧', '٦', '٥', '٤', '٣', '٢', '١','٠'];
+
+        $num = range(0, 9);
+        $convertedPersianNums = str_replace($persian, $num, $string);
+        $englishNumbersOnly = str_replace($arabic, $num, $convertedPersianNums);
+
+        return $englishNumbersOnly;
+    }
+
     public static function cardValidate($cardNumber = 0000000000000000)
     {
         if (strlen($cardNumber)!=16) {
@@ -114,7 +126,7 @@ class IrBank
         $sum = [];
         $numbers = [];
         $passKey = [0,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,];
-        if (preg_match("/^([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])$/s", $cardNumber, $numbers)) {
+        if (preg_match("/^([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])$/s", self::convertNumbers($cardNumber), $numbers)) {
             foreach ($numbers as $key => $number) {
                 $row = $number*$passKey[$key];
                 $sum[] = $row>9 ? $row-9 : $row;
@@ -133,7 +145,7 @@ class IrBank
         if (strtoupper(substr($ibanNumber, 0, 2))!="IR") {
             return false;
         }
-        $formula = (substr($ibanNumber, 4, 22)."1828".substr($ibanNumber, 2, 2))/97;
+        $formula = (substr(self::convertNumbers($ibanNumber), 4, 22)."1828".substr(self::convertNumbers($ibanNumber), 2, 2))/97;
 
         if (substr($formula, 0, 2) == '1.') {
             return true;
@@ -148,7 +160,7 @@ class IrBank
             return null;
         }
 
-        $number = substr($cardNumber, 0, 6);
+        $number = substr(self::convertNumbers($cardNumber), 0, 6);
         self::data();
         foreach (self::$banks as $bank) {
             if ($bank->isCard($number)) {
@@ -160,12 +172,11 @@ class IrBank
 
     public static function getBankNameByIban($ibanNumber = "IR000000000000000000000000")
     {
-        if (!self::ibanValidate($ibanNumber)) {
+        if (!self::ibanValidate(self::convertNumbers($ibanNumber))) {
             return null;
         }
 
-        $number = substr($ibanNumber, 4, 3);
-        echo $number;
+        $number = substr(self::convertNumbers($ibanNumber), 4, 3);
         self::data();
         foreach (self::$banks as $bank) {
             if ($bank->isIban($number)) {
