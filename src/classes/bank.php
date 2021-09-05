@@ -6,7 +6,7 @@ class Bank
 {
     public $name;
     protected $preCardNumbers = [];
-    protected $shebaNumbers = [];
+    protected $ibanNumbers = [];
     public function __construct($name)
     {
         $this->name = $name;
@@ -15,9 +15,9 @@ class Bank
     {
         $this->preCardNumbers[] = $number;
     }
-    public function addShebaNumber($number)
+    public function addIbanNumber($number)
     {
-        $this->shebaNumbers[] = $number;
+        $this->ibanNumbers[] = $number;
     }
     public function isCard($cardNumber=000000)
     {
@@ -26,9 +26,9 @@ class Bank
         }
         return false;
     }
-    public function isSheba($sheba=000)
+    public function isIban($iban=000)
     {
-        if (in_array($sheba, $this->shebaNumbers)) {
+        if (in_array($iban, $this->ibanNumbers)) {
             return true;
         }
         return false;

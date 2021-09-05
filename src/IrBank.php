@@ -13,59 +13,63 @@ class IrBank
         $bankObj->addPreCardNumber(627412);
         self::$banks[] = $bankObj = new Bank('ansar');
         $bankObj->addPreCardNumber(627381);
-        $bankObj->addShebaNumber(63);
+        $bankObj->addIbanNumber(63);
         self::$banks[] = $bankObj = new Bank('iran-zamin');
         $bankObj->addPreCardNumber(505785);
+        $bankObj->addIbanNumber(69);
         self::$banks[] = $bankObj = new Bank('saderat');
         $bankObj->addPreCardNumber(603769);
-        $bankObj->addShebaNumber(19);
+        $bankObj->addIbanNumber(19);
         self::$banks[] = $bankObj = new Bank('parsian');
         $bankObj->addPreCardNumber(622106);
         $bankObj->addPreCardNumber(627884);
-        $bankObj->addShebaNumber(54);
+        $bankObj->addIbanNumber(54);
         self::$banks[] = $bankObj = new Bank('pasargad');
         $bankObj->addPreCardNumber(639347);
         $bankObj->addPreCardNumber(502229);
-        $bankObj->addShebaNumber(57);
+        $bankObj->addIbanNumber(57);
         self::$banks[] = $bankObj = new Bank('tat');
         $bankObj->addPreCardNumber(626314);
         self::$banks[] = $bankObj = new Bank('tejarat');
         $bankObj->addPreCardNumber(627353);
+        $bankObj->addIbanNumber(18);
         self::$banks[] = $bankObj = new Bank('tosee-taavon');
         $bankObj->addPreCardNumber(502908);
         self::$banks[] = $bankObj = new Bank('tosee-saderat');
         $bankObj->addPreCardNumber(627648);
         $bankObj->addPreCardNumber(207177);
-        $bankObj->addShebaNumber(20);
+        $bankObj->addIbanNumber(20);
         self::$banks[] = $bankObj = new Bank('hekmat-iranian');
         $bankObj->addPreCardNumber(636949);
         self::$banks[] = $bankObj = new Bank('dey');
         $bankObj->addPreCardNumber(502938);
         self::$banks[] = $bankObj = new Bank('refah');
         $bankObj->addPreCardNumber(589463);
-        $bankObj->addShebaNumber(13);
+        $bankObj->addIbanNumber(13);
         self::$banks[] = $bankObj = new Bank('saman');
         $bankObj->addPreCardNumber(621986);
-        $bankObj->addShebaNumber(56);
+        $bankObj->addIbanNumber(56);
         self::$banks[] = $bankObj = new Bank('sepah');
         $bankObj->addPreCardNumber(589210);
-        $bankObj->addShebaNumber(15);
+        $bankObj->addIbanNumber(15);
         self::$banks[] = $bankObj = new Bank('sarmaye');
         $bankObj->addPreCardNumber(639607);
         self::$banks[] = $bankObj = new Bank('sina');
         $bankObj->addPreCardNumber(639346);
         self::$banks[] = $bankObj = new Bank('shahr');
         $bankObj->addPreCardNumber(502806);
+        $bankObj->addIbanNumber(61);
         self::$banks[] = $bankObj = new Bank('sanaat-madan');
         $bankObj->addPreCardNumber(627961);
         self::$banks[] = $bankObj = new Bank('mehr-iran');
         $bankObj->addPreCardNumber(606373);
         self::$banks[] = $bankObj = new Bank('ghavamin');
         $bankObj->addPreCardNumber(639599);
-        $bankObj->addShebaNumber(52);
+        $bankObj->addIbanNumber(52);
         self::$banks[] = $bankObj = new Bank('kar-afarin');
         $bankObj->addPreCardNumber(627488);
         $bankObj->addPreCardNumber(502910);
+        $bankObj->addIbanNumber(53);
         self::$banks[] = $bankObj = new Bank('keshavarzi');
         $bankObj->addPreCardNumber(603770);
         $bankObj->addPreCardNumber(639217);
@@ -78,13 +82,13 @@ class IrBank
         self::$banks[] = $bankObj = new Bank('melat');
         $bankObj->addPreCardNumber(610433);
         $bankObj->addPreCardNumber(991975);
-        $bankObj->addShebaNumber(12);
+        $bankObj->addIbanNumber(12);
         self::$banks[] = $bankObj = new Bank('meli');
         $bankObj->addPreCardNumber(603799);
-        $bankObj->addShebaNumber(17);
+        $bankObj->addIbanNumber(17);
         self::$banks[] = $bankObj = new Bank('mehr-eghtesad');
         $bankObj->addPreCardNumber(639370);
-        $bankObj->addShebaNumber(22);
+        $bankObj->addIbanNumber(22);
         self::$banks[] = $bankObj = new Bank('post-bank');
         $bankObj->addPreCardNumber(627760);
         self::$banks[] = $bankObj = new Bank('moasese-tosee');
@@ -97,7 +101,7 @@ class IrBank
         $bankObj->addPreCardNumber(504172);
         self::$banks[] = $bankObj = new Bank('ayande');
         $bankObj->addPreCardNumber(636214);
-        $bankObj->addShebaNumber(62);
+        $bankObj->addIbanNumber(62);
         self::$banks[] = $bankObj = new Bank('khavarmiyane');
         $bankObj->addPreCardNumber(505809);
     }
@@ -121,6 +125,23 @@ class IrBank
         }
     }
 
+    public static function ibanValidate($ibanNumber = "IR000000000000000000000000")
+    {
+        if (strlen($ibanNumber)!=26) {
+            return false;
+        }
+        if (strtoupper(substr($ibanNumber, 0, 2))!="IR") {
+            return false;
+        }
+        $formula = (substr($ibanNumber, 4, 22)."1828".substr($ibanNumber, 2, 2))/97;
+
+        if (substr($formula, 0, 2) == '1.') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static function getBankNameByCard($cardNumber = 0000000000000000)
     {
         if (!self::cardValidate($cardNumber)) {
@@ -131,6 +152,23 @@ class IrBank
         self::data();
         foreach (self::$banks as $bank) {
             if ($bank->isCard($number)) {
+                return $bank->name;
+            }
+        }
+        return null;
+    }
+
+    public static function getBankNameByIban($ibanNumber = "IR000000000000000000000000")
+    {
+        if (!self::ibanValidate($ibanNumber)) {
+            return null;
+        }
+
+        $number = substr($ibanNumber, 4, 3);
+        echo $number;
+        self::data();
+        foreach (self::$banks as $bank) {
+            if ($bank->isIban($number)) {
                 return $bank->name;
             }
         }
