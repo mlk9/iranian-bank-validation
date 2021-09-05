@@ -3,6 +3,7 @@
     "description": "validate information of Iranian banks, you can use this in your Laravel projects",
     "type": "composer-plugin",
     "license": "MIT",
+    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Mohammad Maleki",
