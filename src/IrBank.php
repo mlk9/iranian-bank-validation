@@ -128,7 +128,7 @@ class IrBank
 
     public static function cardValidate($cardNumber = 0000000000000000)
     {
-        if (strlen($cardNumber)!=16) {
+        if (strlen(self::convertNumbers($cardNumber))!=16) {
             return false;
         }
         $sum = [];
@@ -147,19 +147,23 @@ class IrBank
 
     public static function ibanValidate($ibanNumber = "IR000000000000000000000000")
     {
-        if (strlen($ibanNumber)!=26) {
+        if (strlen(self::convertNumbers($ibanNumber))!=26) {
             return false;
         }
         if (strtoupper(substr($ibanNumber, 0, 2))!="IR") {
             return false;
         }
-        $formula = (substr(self::convertNumbers($ibanNumber), 4, 22)."1828".substr(self::convertNumbers($ibanNumber), 2, 2))/97;
+        $ir = 1827;
 
-        if (substr($formula, 0, 2) == '1.') {
-            return true;
-        } else {
-            return false;
+        $formula = substr(self::convertNumbers($ibanNumber), 4, 22).$ir.substr(self::convertNumbers($ibanNumber), 2, 2);
+        $formulacheck = intval(substr($formula, 0, 1));
+
+        for ($i = 1; $i < strlen($formula); $i++) {
+            $formulacheck *= 10;
+            $formulacheck += intval(substr($formula, $i, 1));
+            $formulacheck %= 97;
         }
+        return $formulacheck == 1;
     }
 
     public static function getBankNameByCard($cardNumber = 0000000000000000)
