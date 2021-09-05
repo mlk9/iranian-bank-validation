@@ -4,6 +4,7 @@
     "type": "composer-plugin",
     "license": "MIT",
     "minimum-stability": "dev",
+    "prefer-stable" : true,
     "authors": [
         {
             "name": "Mohammad Maleki",
