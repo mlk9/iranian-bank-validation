@@ -2,7 +2,7 @@
 
 namespace IrBank\classes; //fix
 
-class Bank
+class bank
 {
     public $name;
     protected $preCardNumbers = [];
