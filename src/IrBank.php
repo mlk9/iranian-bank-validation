@@ -2,7 +2,7 @@
 
 namespace IrBank;
 
-use IrBank\Classes\Bank;
+use IrBank\classes\bank;
 
 class IrBank
 {
