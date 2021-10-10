@@ -1,6 +1,6 @@
 <?php
 
-namespace IrBank\Classes;
+namespace IrBank\classes; //fix
 
 class Bank
 {
